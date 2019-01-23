@@ -109,6 +109,23 @@ const ENV_VAR_NAME_TO_CONFIG_INFO = {
   //   key:     'security:passport-twitter:callbackUrl',
   //   type:    ,
   //   default:
+    // OAUTH_SLACK_CONSUMER_KEY: {
+  //   ns:      'crowi',
+  //   key:     'security:passport-SLACK:consumerKey',
+  //   type:    ,
+  //   default:
+  // },
+  // OAUTH_SLACK_CONSUMER_SECRET: {
+  //   ns:      'crowi',
+  //   key:     'security:passport-SLACK:consumerSecret',
+  //   type:    ,
+  //   default:
+  // },
+  // OAUTH_SLACK_CALLBACK_URI: {
+  //   ns:      'crowi',
+  //   key:     'security:passport-SLACK:callbackUrl',
+  //   type:    ,
+  //   default:
   // },
   APP_SITE_URL: {
     ns:      'crowi',

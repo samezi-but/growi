@@ -5,6 +5,7 @@ const LdapStrategy = require('passport-ldapauth');
 const GoogleStrategy = require('passport-google-auth').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
+const SlackStrategy = require('passport-slack').Strategy;
 const SamlStrategy = require('passport-saml').Strategy;
 
 /**
@@ -43,6 +44,11 @@ class PassportService {
      * the flag whether TwitterStrategy is set up successfully
      */
     this.isTwitterStrategySetup = false;
+
+    /**
+     * the flag whether SlackStrategy is set up successfully
+     */
+    this.isSlackStrategySetup = false;
 
     /**
      * the flag whether SamlStrategy is set up successfully
@@ -423,14 +429,60 @@ class PassportService {
   }
 
   /**
-   * reset TwitterStrategy
+   * reset SlackStrategy
    *
    * @memberof PassportService
    */
-  resetTwitterStrategy() {
-    debug('TwitterStrategy: reset');
-    passport.unuse('twitter');
-    this.isTwitterStrategySetup = false;
+  resetSlackStrategy() {
+    debug('SlackStrategy: reset');
+    passport.unuse('slack');
+    this.isSlackStrategySetup = false;
+  }
+  setupSlackStrategy() {
+    // check whether the strategy has already been set up
+    if (this.isSlackStrategySetup) {
+      throw new Error('SlackStrategy has already been set up');
+    }
+
+    const config = this.crowi.config;
+    const Config = this.crowi.model('Config');
+    const isSlackEnabled = Config.isEnabledPassportSlack(config);
+
+    // when disabled
+    if (!isSlackEnabled) {
+      return;
+    }
+
+    debug('SlackStrategy: setting up..');
+    passport.use(new SlackStrategy({
+      consumerKey: config.crowi['security:passport-slack:consumerKey'] || process.env.OAUTH_SLACK_CONSUMER_KEY,
+      consumerSecret: config.crowi['security:passport-slack:consumerSecret'] || process.env.OAUTH_SLACK_CONSUMER_SECRET,
+      callbackURL: (this.crowi.configManager.getConfig('crowi', 'app:siteUrl') != null)
+        ? `${this.crowi.configManager.getSiteUrl()}/passport/slack/callback`                               // auto-generated with v3.2.4 and above
+        : config.crowi['security:passport-slack:callbackUrl'] || process.env.OAUTH_SLACK_CALLBACK_URI,   // DEPRECATED: backward compatible with v3.2.3 and below
+      skipUserProfile: false,
+    }, function(accessToken, refreshToken, profile, done) {
+      if (profile) {
+        return done(null, profile);
+      }
+      else {
+        return done(null, false);
+      }
+    }));
+
+    this.isSlackStrategySetup = true;
+    debug('SlackStrategy: setup is done');
+  }
+
+  /**
+   * reset SlackStrategy
+   *
+   * @memberof PassportService
+   */
+  resetSlackStrategy() {
+    debug('SlackStrategy: reset');
+    passport.unuse('slack');
+    this.isSlackStrategySetup = false;
   }
 
   setupSamlStrategy() {

@@ -1188,6 +1188,35 @@ module.exports = function(crowi, app) {
 
     return res.json({status: true});
   };
+
+  actions.api.securityPassportSlackSetting = async(req, res) => {
+    const form = req.form.settingForm;
+
+    if (!req.form.isValid) {
+      return res.json({status: false, message: req.form.errors.join('\n')});
+    }
+
+    debug('form content', form);
+    await saveSettingAsync(form);
+    const config = await crowi.getConfig();
+
+
+    // reset strategy
+    await crowi.passportService.resetSlackStrategy();
+    // setup strategy
+    if (Config.isEnabledPassportSlack(config)) {
+      try {
+        await crowi.passportService.setupSlackStrategy(true);
+      }
+      catch (err) {
+        // reset
+        await crowi.passportService.resetSlackStrategy();
+        return res.json({status: false, message: err.message});
+      }
+    }
+
+    return res.json({status: true});
+  };
   actions.api.customizeSetting = function(req, res) {
     const form = req.form.settingForm;
 

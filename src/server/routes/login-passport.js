@@ -321,6 +321,27 @@ module.exports = function(crowi, app) {
       return loginFailure(req, res, next);
     }
 
+    const loginWithSlack = function(req, res, next) {
+      if (!passportService.isSlackStrategySetup) {
+        debug('SlackStrategy has not been set up');
+        req.flash('warningMessage', 'SlackStrategy has not been set up');
+        return next();
+      }
+
+      passport.authenticate('Slack')(req, res);
+    };
+
+    const loginPassportSlackCallback = async(req, res, next) => {
+      const providerId = 'Slack';
+      const strategyName = 'Slack';
+
+      let response;
+      try {
+        response = await promisifiedPassportAuthentication(strategyName, req, res);
+      }
+      catch (err) {
+        return loginFailure(req, res, next);
+      }
     const userInfo = {
       'id': response.id,
       'username': response.username,
@@ -470,10 +491,12 @@ module.exports = function(crowi, app) {
     loginWithGoogle,
     loginWithGitHub,
     loginWithTwitter,
+    loginWithSlack,
     loginWithSaml,
     loginPassportGoogleCallback,
     loginPassportGitHubCallback,
     loginPassportTwitterCallback,
+    loginPassportSlackCallback,
     loginPassportSamlCallback,
   };
 };

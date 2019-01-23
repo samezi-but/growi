@@ -180,6 +180,7 @@
                 <li>{{ t("security_setting.google_auth2") }}</li>
                 <li>{{ t("security_setting.github_auth2") }}</li>
                 <li>{{ t("security_setting.twitter_auth2") }}</li>
+                <li>{{ t("security_setting.slack_auth2") }}</li>
                 <li class="text-muted">(TBD) <del>{{ t("security_setting.facebook_auth2") }}</del></li>
               </ul>
             </div>
@@ -304,6 +305,9 @@
             <li>
               <a href="#passport-twitter" data-toggle="tab" role="tab"><i class="fa fa-twitter"></i> Twitter</a>
             </li>
+            <li>
+              <a href="#passport-slack" data-toggle="tab" role="tab"><i class="fa fa-slack"></i> Slack</a>
+            </li>
             <li class="tbd">
               <a href="#passport-facebook" data-toggle="tab" role="tab"><i class="fa fa-facebook"></i> (TBD) Facebook</a>
             </li>
@@ -330,6 +334,10 @@
               {% include './widget/passport/twitter.html' %}
             </div>
 
+            <div id="passport-slack" class="tab-pane" role="tabpanel">
+              {% include './widget/passport/slack.html' %}
+            </div>
+
             <div id="passport-github" class="tab-pane" role="tabpanel">
               {% include './widget/passport/github.html' %}
             </div>
@@ -342,7 +350,7 @@
   </div>
 
   <script>
-    $('#generalSetting, #samlSetting, #googleSetting, #mechanismSetting, #githubSetting, #twitterSetting').each(function() {
+    $('#generalSetting, #samlSetting, #googleSetting, #mechanismSetting, #githubSetting, #twitterSetting, #slackSetting').each(function() {
       $(this).submit(function()
       {
         function showMessage(formId, msg, status) {

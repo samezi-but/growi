@@ -387,6 +387,7 @@
     "google_auth2_by_crowi_desc": "However, this feature does not create new users, butit only makes it possible to login to the existing user who set up the association.",
     "facebook_auth2": "Facebook OAuth authentication",
     "twitter_auth2": "Twitter OAuth authentication",
+    "slack_auth2": "Slack OAuth authentication",
     "github_auth2": "GitHub OAuth authentication",
     "crowi_auth": "Crowi classic authentication mechanism",
 		"require_server_restart": "Restarting the server is required.",
@@ -484,6 +485,14 @@
         "register_4": "Register your OAuth App with one of Authorized redirect URIs as <code>%s</code> (where <code>%s</code> is your hostname)",
         "register_5": "Copy and paste your ClientID and Client Secret above"
       },
+      "Slack": {
+        "name": "Slack OAuth",
+        "register_1": "Access <a href=\"%s\" target=\"_blank\">%s</a>",
+        "register_2": "Sign in Slack",
+        "register_3": "Create Credentials &rightarrow; OAuth client ID &rightarrow; Select \"Web application\"",
+        "register_4": "Register your OAuth App with one of Authorized redirect URIs as <code>%s</code> (where <code>%s</code> is your hostname)",
+        "register_5": "Copy and paste your ClientID and Client Secret above"
+      },
       "GitHub": {
         "name": "GitHub OAuth",
         "register_1": "Access <a href=\"%s\" target=\"_blank\">%s</a>",
@@ -493,7 +502,8 @@
       "how_to": {
         "google": "How to configure Google OAuth?",
         "github": "How to configure GitHub OAuth?",
-        "twitter": "How to configure Twitter OAuth?"
+        "twitter": "How to configure Twitter OAuth?",
+        "Slack": "How to configure Slack OAuth?"
       }
     },
     "form_item_name": {

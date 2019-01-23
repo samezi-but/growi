@@ -42,6 +42,7 @@ module.exports = {
         { key: 'security:passport-github:callbackUrl' },
         { key: 'security:passport-google:callbackUrl' },
         { key: 'security:passport-twitter:callbackUrl' },
+        { key: 'security:passport-slack:callbackUrl' },
         { key: 'security:passport-saml:callbackUrl' },
       ]
     });

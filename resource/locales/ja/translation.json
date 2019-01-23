@@ -402,6 +402,7 @@
     "google_auth2_by_crowi_desc": "ただし、この機能では新たなユーザーは作成されず、関連付け設定を行った既存ユーザーをログインできるようにするだけです。",
     "facebook_auth2": "Facebook OAuth 認証",
     "twitter_auth2": "Twitter OAuth 認証",
+    "slack_auth2": "Slack OAuth 認証",
     "github_auth2": "GitHub OAuth 認証",
     "require_server_restart": "サーバーを再起動してください。",
     "server_on_passport_auth": "Passport 認証機構でサーバーが稼働しています。",
@@ -498,6 +499,14 @@
         "register_4": "Create your Twitter Applicationで作成",
         "register_5": "上記フォームにクライアントIDとクライアントシークレットを入力"
       },
+      "Slack": {
+        "name": "Slack OAuth",
+        "register_1": "<a href=\"%s\" target=\"_blank\">%s</a>へアクセス",
+        "register_2": "Slackにサインイン",
+        "register_3": "Create New Appをクリック &rightarrow; Application Detailsの各項目を入力",
+        "register_4": "Create your Slack Applicationで作成",
+        "register_5": "上記フォームにクライアントIDとクライアントシークレットを入力"
+      },
       "GitHub": {
         "name": "GitHub OAuth",
         "register_1": "<a href=\"%s\" target=\"_blank\">%s</a>へアクセス",
@@ -507,7 +516,8 @@
       "how_to": {
         "google": "Google OAuth の設定方法",
         "github": "GitHub OAuth の設定方法",
-        "twitter": "Twitter OAuth の設定方法"
+        "twitter": "Twitter OAuth の設定方法",
+        "slack": "Slack OAuth の設定方法"
       }
     },
     "form_item_name": {
