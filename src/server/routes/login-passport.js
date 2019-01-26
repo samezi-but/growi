@@ -321,32 +321,42 @@ module.exports = function(crowi, app) {
       return loginFailure(req, res, next);
     }
 
-    const loginWithSlack = function(req, res, next) {
-      if (!passportService.isSlackStrategySetup) {
-        debug('SlackStrategy has not been set up');
-        req.flash('warningMessage', 'SlackStrategy has not been set up');
-        return next();
-      }
+    const externalAccount = await getOrCreateUser(req, res, userInfo, providerId);
+    if (!externalAccount) {
+      return loginFailure(req, res, next);
+    }
 
-      passport.authenticate('Slack')(req, res);
-    };
+    const user = await externalAccount.getPopulatedUser();
 
-    const loginPassportSlackCallback = async(req, res, next) => {
-      const providerId = 'Slack';
-      const strategyName = 'Slack';
+    // login
+    req.logIn(user, err => {
+      if (err) { return next(err) }
+      return loginSuccess(req, res, user);
+    });
+  };
 
-      let response;
-      try {
-        response = await promisifiedPassportAuthentication(strategyName, req, res);
-      }
-      catch (err) {
-        return loginFailure(req, res, next);
-      }
-    const userInfo = {
-      'id': response.id,
-      'username': response.username,
-      'name': response.displayName
-    };
+
+  const loginWithSlack = function(req, res, next) {
+    if (!passportService.isSlackStrategySetup) {
+      debug('SlackStrategy has not been set up');
+      req.flash('warningMessage', 'SlackStrategy has not been set up');
+      return next();
+    }
+
+    passport.authenticate('Slack')(req, res);
+  };
+
+  const loginPassportSlackCallback = async(req, res, next) => {
+    const providerId = 'Slack';
+    const strategyName = 'Slack';
+
+    let response;
+    try {
+      response = await promisifiedPassportAuthentication(strategyName, req, res);
+    }
+    catch (err) {
+      return loginFailure(req, res, next);
+    }
 
     const externalAccount = await getOrCreateUser(req, res, userInfo, providerId);
     if (!externalAccount) {
