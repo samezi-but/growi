@@ -429,15 +429,16 @@ class PassportService {
   }
 
   /**
-   * reset SlackStrategy
+   * reset TwitterStrategy
    *
    * @memberof PassportService
    */
-  resetSlackStrategy() {
-    debug('SlackStrategy: reset');
-    passport.unuse('slack');
+  resetTwitterStrategy() {
+    debug('TwitterStrategy: reset');
+    passport.unuse('twitter');
     this.isSlackStrategySetup = false;
   }
+
   setupSlackStrategy() {
     // check whether the strategy has already been set up
     if (this.isSlackStrategySetup) {
